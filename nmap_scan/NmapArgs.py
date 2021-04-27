@@ -748,7 +748,13 @@ class NmapArgs:
             args.append(script)
 
         if 0 != len(self.__script_args):
-            args.append('--script-args=' + ','.join(self.__script_args))
+            #args.append('--script-args')
+            if isinstance(self.__script_args,Mapping):
+                args.append(f'--script-args={(",".join(f"{k}={v}" for k,v in self.__script_args.items()))}')
+            elif isinstance(self.__script_args,Sequence):
+                args.append(f'--script-args={",".join(self.__script_args)}')
+            else: raise ValueError()
+            
 
         if 0 != len(self.__proxies):
             args.append('--proxies')
