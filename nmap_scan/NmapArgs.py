@@ -2,6 +2,7 @@
 # -*- coding: utf-8
 
 import argparse
+from typing import Mapping, Sequence, Union
 
 #  nmap-scan
 #
@@ -32,10 +33,10 @@ from nmap_scan.Exceptions.LogicException import LogicException
 
 class NmapArgs:
 
-    def __init__(self, hosts=[], num_hosts=None, exclude_hosts=[], dns_servers=[], system_dns=False, traceroute=False,
+    def __init__(self, hosts:list[str]=[], num_hosts=None, exclude_hosts=[], dns_servers=[], system_dns=False, traceroute=False,
                  ports=[], exclude_ports=[], fast_mode=False, scan_consecutively=False, top_ports=None, port_ratio=None,
                  service_discovery=False, version_intensity=None, version_light=None, version_all=False,
-                 version_trace=False, default_script=False, scripts=[], script_args=[], script_trace=False,
+                 version_trace=False, default_script=False, scripts:list[str]=[], script_args:Union[list[str],dict[str,str]]=[], script_trace=False,
                  os_detection=False, os_guess=False, os_scan_limit=None, timing=None, min_hostgroup=None,
                  max_hostgroup=None, min_parallelism=None, max_parallelism=None, min_rtt_timeout=None,
                  max_rtt_timeout=None, initial_rtt_timeout=None, max_retries=None, host_timeout=None, scan_delay=None,
@@ -234,7 +235,7 @@ class NmapArgs:
     def get_pn(self):
         return self.__pn
 
-    def set_script_args(self, script_args):
+    def set_script_args(self, script_args:Union[Sequence[str],Mapping[str,str]]):
         if not self.__locked:
             self.__script_args = script_args
 
@@ -243,7 +244,7 @@ class NmapArgs:
     def get_script_args(self):
         return self.__script_args
 
-    def set_scripts(self, scripts):
+    def set_scripts(self, scripts:Sequence[str]):
         if not self.__locked:
             self.__scripts = scripts
 
@@ -657,7 +658,7 @@ class NmapArgs:
     def get_num_hosts(self):
         return self.__num_hosts
 
-    def set_hosts(self, hosts):
+    def set_hosts(self, hosts:Sequence[str]):
         if not self.__locked:
             self.__hosts = hosts
 
